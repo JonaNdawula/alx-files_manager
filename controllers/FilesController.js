@@ -30,7 +30,7 @@ class FilesController {
             return res.status(400).json({ error: 'Missing data' });
         }
 
-        let parentId = 0;
+        let parentId = 0; 
 
         if (parentId) {
             const parent = await dbClient.db.collection('files').findOne({ _id: new ObjectId(parentId) });
@@ -68,7 +68,7 @@ class FilesController {
             fileQueue.add({ userId, fileId: result.insertedId });
         }
 
-        return res.status(201).json({ id: result.insertedId, ...newFile });
+        return res.status(201).json({ id: result.insertedId, ...newFile }); 
     }
 
     static async getShow(req, res) {
@@ -97,7 +97,7 @@ class FilesController {
 
     static async getIndex(req, res) {
         const token = req.headers['x-token'];
-        const parentId = req.query.parentId || 0;
+        const parentId = req.query.parentId || 0; 
         const page = parseInt(req.query.page, 10) || 0;
 
         if (!token) {
