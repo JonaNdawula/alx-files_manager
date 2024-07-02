@@ -1,16 +1,5 @@
 const express = require('express');
-
 const router = express.Router();
-const crypto = require('crypto');
-const { v4: uuidv4 } = require('uuid');
-const { ObjectId } = require('mongodb');
-const fs = require('fs');
-const mime = require('mime-types');
-const imageThumbnail = require('image-thumbnail');
-const dbClient = require('../utils/db');
-const redisClient = require('../utils/redis');
-
-// Controllers
 const AppController = require('../controllers/AppController');
 const UsersController = require('../controllers/UsersController');
 const AuthController = require('../controllers/AuthController');
