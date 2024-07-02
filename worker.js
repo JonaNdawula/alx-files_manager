@@ -1,7 +1,8 @@
 const Queue = require('bull');
 const imageThumbnail = require('image-thumbnail');
 const dbClient = require('./utils/db');
-const { redisClient } = require('./utils/redis');
+const { ObjectId } = require('mongodb');
+const fs = require('fs');
 
 const fileQueue = new Queue('fileQueue', 'redis://localhost:6379');
 
