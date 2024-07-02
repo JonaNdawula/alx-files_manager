@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { ObjectId } = require('mongodb'); 
+const { ObjectId } = require('mongodb');
 const dbClient = require('../utils/db');
 const { redisClient } = require('../utils/redis');
 
@@ -32,7 +32,7 @@ class UsersController {
     }
 
     static async getMe(req, res) {
-        const token = req.headers['x-token']; 
+        const token = req.headers['x-token']; // Retrieve the token
 
         if (!token) {
             return res.status(401).json({ error: 'Unauthorized' });
@@ -53,3 +53,4 @@ class UsersController {
 }
 
 module.exports = UsersController;
+
