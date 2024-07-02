@@ -18,7 +18,7 @@ class FilesController {
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const { name, type, parentId, isPublic, data } = req.body;
+        const { name, type, parentId, isPublic, data } = req.body; // parentId declared with let
 
         if (!name) {
             return res.status(400).json({ error: 'Missing name' });
@@ -30,7 +30,7 @@ class FilesController {
             return res.status(400).json({ error: 'Missing data' });
         }
 
-       // let parentId = 0; 
+        let parentId = 0; 
 
         if (parentId) {
             const parent = await dbClient.db.collection('files').findOne({ _id: new ObjectId(parentId) });
@@ -231,3 +231,4 @@ class FilesController {
 }
 
 module.exports = FilesController;
+
