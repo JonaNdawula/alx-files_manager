@@ -1,4 +1,7 @@
 const crypto = require('crypto');
+const { v4: uuid4 } = require('uuid');
+const { objectId } = require('mongodb');
+const { redisClient } = require('../utils/redis');
 const dbClient = require('../utils/db');
 
 class UsersController {
@@ -27,6 +30,23 @@ class UsersController {
     const result = await dbClient.db.collection('users').insertOne(newUser);
 
     res.status(201).json({ id: result.insertedId, email });
+  }
+
+  static async getMe(req, res) {
+    if (!token) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    
+    const userId = await redisClient.get(`auth_${token}`);
+    if (!userId) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    const user = await dbClient.db.collection('users').findOne({ _id: new ObjectId(userId) });
+
+    if (!user) {
+	return res.status(401).json({error: 'Unauthorized'});    
+    }
+    res.status(200).json({id: user._id, email: user.email });
   }
 }
 
