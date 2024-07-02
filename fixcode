@@ -1,7 +1,1 @@
-#!/usr/bin/env bash
-
-echo "Enter file name"
-
-read file 
-
-eslint --fix $file
+npx eslint . --ext .js --fix
