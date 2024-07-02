@@ -4,7 +4,6 @@ const { ObjectId } = require('mongodb');
 const dbClient = require('../utils/db');
 const { redisClient, fileQueue } = require('../utils/redis');
 const mime = require('mime-types');
-const imageThumbnail = require('image-thumbnail');
 
 class FilesController {
     static async postUpload(req, res) {
@@ -31,6 +30,8 @@ class FilesController {
             return res.status(400).json({ error: 'Missing data' });
         }
 
+        let parentId = 0;
+
         if (parentId) {
             const parent = await dbClient.db.collection('files').findOne({ _id: new ObjectId(parentId) });
             if (!parent) {
@@ -39,8 +40,6 @@ class FilesController {
             if (parent.type !== 'folder') {
                 return res.status(400).json({ error: 'Parent is not a folder' });
             }
-        } else {
-            parentId = 0;
         }
 
         const newFile = {
@@ -69,7 +68,7 @@ class FilesController {
             fileQueue.add({ userId, fileId: result.insertedId });
         }
 
-        res.status(201).json({ id: result.insertedId, ...newFile });
+        return res.status(201).json({ id: result.insertedId, ...newFile });
     }
 
     static async getShow(req, res) {
@@ -93,7 +92,7 @@ class FilesController {
             return res.status(404).json({ error: 'Not found' });
         }
 
-        res.status(200).json(file);
+        return res.status(200).json(file);
     }
 
     static async getIndex(req, res) {
@@ -125,7 +124,7 @@ class FilesController {
             },
         ]).toArray();
 
-        res.status(200).json(files);
+        return res.status(200).json(files);
     }
 
     static async putPublish(req, res) {
@@ -156,7 +155,7 @@ class FilesController {
 
         const updatedFile = await dbClient.db.collection('files').findOne({ _id: new ObjectId(fileId) });
 
-        res.status(200).json(updatedFile);
+        return res.status(200).json(updatedFile);
     }
 
     static async putUnpublish(req, res) {
@@ -187,7 +186,7 @@ class FilesController {
 
         const updatedFile = await dbClient.db.collection('files').findOne({ _id: new ObjectId(fileId) });
 
-        res.status(200).json(updatedFile);
+        return res.status(200).json(updatedFile);
     }
 
     static async getFile(req, res) {
@@ -226,10 +225,9 @@ class FilesController {
 
         const fileContent = fs.readFileSync(localPath);
 
-        res.setHeader('Content-Type', mimeType);
-        res.send(fileContent);
+        return res.setHeader('Content-Type', mimeType);
+        return res.send(fileContent);
     }
 }
 
 module.exports = FilesController;
-
