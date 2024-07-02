@@ -1,6 +1,5 @@
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
-const { ObjectId } = require('mongodb');
 const { redisClient } = require('../utils/redis');
 const dbClient = require('../utils/db');
 
