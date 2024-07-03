@@ -31,7 +31,6 @@ class UsersController {
     return res.status(201).json({ id: result.insertedId, email });
   }
 
-
   static async getMe(req, res) {
     const token = req.headers['x-token'];
 
@@ -51,9 +50,6 @@ class UsersController {
 
     return res.status(200).json({ id: user._id, email: user.email });
   }
-
-
 }
-
 
 module.exports = UsersController;

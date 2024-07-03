@@ -25,9 +25,9 @@ class DBClient {
   }
 
   async ensureConnected() {
-   if (!this.connected) {
-     await this.connectPromise;
-   }
+    if (!this.connected) {
+      await this.connectPromise;
+    }
   }
 
   isAlive() {
