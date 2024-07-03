@@ -3,6 +3,7 @@ const fs = require('fs');
 const { ObjectId } = require('mongodb');
 const mime = require('mime-types');
 const dbClient = require('../utils/db');
+const fileQueue = require('../utils/db');
 const redisClient = require('../utils/redis');
 
 class FilesController {
