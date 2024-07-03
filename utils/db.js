@@ -43,9 +43,8 @@ class DBClient {
 
 const dbClient = new DBClient();
 
-dbClient.connect().catch(err => {
+dbClient.connect().catch((err) => {
   console.error('Failed to connect to the database:', err);
 });
-
 
 export default dbClient;
