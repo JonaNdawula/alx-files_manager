@@ -3,7 +3,7 @@ const fs = require('fs');
 const { ObjectId } = require('mongodb');
 const mime = require('mime-types');
 const dbClient = require('../utils/db');
-const { redisClient, fileQueue } = require('../utils/redis');
+const redisClient = require('../utils/redis');
 
 class FilesController {
   static async postUpload(req, res) {
