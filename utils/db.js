@@ -9,7 +9,7 @@ class DBClient {
     this.client = new MongoClient(`mongodb://${host}:${port}`, { useUnifiedTopology: true });
     this.dbName = database;
     this.connected = false;
-    this.connect();
+    this.connectPromise = this.connect();
   }
 
   async connect() {
@@ -22,6 +22,12 @@ class DBClient {
       console.error('Connection to MongoDB failed', err);
       this.connected = false;
     }
+  }
+
+  async ensureConnected() {
+   if (!this.connected) {
+     await this.connectPromise;
+   }
   }
 
   isAlive() {
@@ -47,4 +53,4 @@ dbClient.connect().catch((err) => {
   console.error('Failed to connect to the database:', err);
 });
 
-export default dbClient;
+module.exports = dbClient;
